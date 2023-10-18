@@ -3,6 +3,10 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from datetime import datetime
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def to_timestamp(date_string):
     date_format = "%d-%m-%Y %H-%M-%S"
