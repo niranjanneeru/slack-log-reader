@@ -74,9 +74,12 @@ except Exception as e:
     print("Invalid arguments, please use python3 main.py --help")
     exit(1)
 
+result = ""
+
 try:
     messages = get_all_messages()
     print("\n--TOTAL MESSAGES DURING THIS TIMEFRAME: ", len(messages), "\n")
+    result += f"TIMEFRAME: {from_time} to {to_time}\nTOTAL ALERTS: {len(messages)}\n\n"
     incidents = {}
 
     for message in messages[::-1]:
@@ -91,9 +94,14 @@ try:
                     except:
                         pass
 
+    result += "Type: GCP\n\n"
     for k, v in incidents.items():
+        result += f"ID: {k} Link: {v}\n"
         print("ID: ", k, " Link: ", v)
+    result += f"\nCRITICAL ALERTS PENDING: {len(incidents)}\n"
     print("\n--NUMBER OF CRITICAL ALERTS PENDING: ", len(incidents), "\n")
+
+    if len(incidents) > 0 : client.chat_postMessage(channel=os.environ['REPORTING_CHANNEL_ID'], text = result, unfurl_links=False)
 
 except SlackApiError as e:
     print(f"Error: {e.response['error']}")
