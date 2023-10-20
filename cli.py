@@ -15,8 +15,8 @@ parser.add_argument("--begin", help="Format is DD-MM-YYYY HH:MM:SS (24 hr format
 parser.add_argument("--end", help="Format is DD-MM-YYYY HH:MM:SS (24 hr format)")
 parser.add_argument("--mode", help="Modes - gcp kubernetes")
 args = parser.parse_args()
-from_time = "19-10-2023 15:09:00"  # args.begin
-to_time = "20-10-2023 09:59:00"  # args.end
+from_time = args.begin
+to_time = args.end
 mode = args.mode
 
 # CONVERTING INPUT TIME TO TIMESTAMP
