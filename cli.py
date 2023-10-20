@@ -57,13 +57,7 @@ try:
 
     result += "Type: GCP\n\n"
     for k, v in incidents.items():
-        result += f"ID: {k}\n"
-        blocks.append(
-            {
-                "type": "section",
-                "text": {"type": "mrkdwn", "text": f"[{v[1]}]({v[0]})"},
-            }
-        )
+        result += f"ID: <{v[0]}|{k}> \n ALERT: {v[1]} \n"
         print("ID: ", k, " Link: ", v[0], " Details: ", v[1])
     result += f"\nCRITICAL ALERTS PENDING: {len(incidents)}\n"
     print("\n--NUMBER OF CRITICAL ALERTS PENDING: ", len(incidents), "\n")
@@ -73,7 +67,7 @@ try:
         client.chat_postMessage(
             channel=os.environ["REPORTING_CHANNEL_ID"],
             text=result,
-            blocks=blocks,
+            mrkdwn=True,
             unfurl_links=False,
         )
 
