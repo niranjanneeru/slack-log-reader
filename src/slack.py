@@ -23,10 +23,11 @@ def work(timestamp_from, timestamp_to, from_time, to_time):
         for message in messages[::-1]:
             if "text" in message:
                 action, link, link_id, process = utils.parse_text(message["text"])
-                details = message["attachments"][0]["text"]
+                details = message["attachments"][0]["text"] if "attachments" in message else None
+                timestamp = int(float(message['ts']))
                 if action == "Incident":
                     if process == "running":
-                        incidents[link_id] = link, details
+                        incidents[link_id] = link, details, timestamp
                     if process == "stopped":
                         try:
                             del incidents[link_id]
@@ -50,3 +51,5 @@ def work(timestamp_from, timestamp_to, from_time, to_time):
 
     except SlackApiError as e:
         print(f"Error: {e.response['error']}")
+
+    return incidents
