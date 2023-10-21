@@ -2,20 +2,19 @@ name: Send Slack Alerts
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: "0 */1 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: checkout repo content
         uses: actions/checkout@v2
 
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: install python packages
         run: |
@@ -23,4 +22,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute py script
+        env:
+          SLACK_API_KEY: ${{ secrets.SLACK_API_KEY }}
+          LOG_CHANNEL_ID: ${{ secrets.LOG_CHANNEL_ID }}
+          REPORTING_CHANNEL_ID: ${{ secrets.REPORTING_CHANNEL_ID }}
         run: python main.py
