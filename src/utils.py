@@ -9,6 +9,11 @@ def to_timestamp(date_string):
     date_obj = datetime.strptime(date_string, date_format)
     return int(date_obj.timestamp())
 
+def to_date(timestamp):
+    date_obj = datetime.fromtimestamp(timestamp)
+    date_string = date_obj.strftime("%d-%m-%Y %H:%M:%S")
+    return date_string
+
 
 def parse_text(text):
     if not text.startswith("Incident"):
