@@ -36,7 +36,7 @@ def work(timestamp_from, timestamp_to, from_time, to_time):
 
         result += "Type: GCP\n\n"
         for k, v in incidents.items():
-            result += f"ID: <{v[0]}|{k}> \n ALERT: {v[1]} \n\n"
+            result += f"[{utils.to_date(v[2])}] ID: <{v[0]}|{k}> \n ALERT: {v[1]} \n\n"
             print("ID: ", k, " Link: ", v[0], " Details: ", v[1])
         result += f"\nCRITICAL ALERTS PENDING: {len(incidents)}\n"
         print("\n--NUMBER OF CRITICAL ALERTS PENDING: ", len(incidents), "\n")

@@ -1,5 +1,5 @@
 import os
-import argparse
+import pytz
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from datetime import datetime
@@ -10,9 +10,11 @@ def to_timestamp(date_string):
     return int(date_obj.timestamp())
 
 def to_date(timestamp):
-    date_obj = datetime.fromtimestamp(timestamp)
-    date_string = date_obj.strftime("%d-%m-%Y %H:%M:%S")
-    return date_string
+    utc_date_obj = datetime.utcfromtimestamp(timestamp)
+    ist = pytz.timezone('Asia/Kolkata')  # IST timezone
+    date_obj_ist = utc_date_obj.replace(tzinfo=pytz.utc).astimezone(ist)
+    date_string_ist = date_obj_ist.strftime("%d-%m-%Y %H:%M:%S")
+    return date_string_ist
 
 
 def parse_text(text):

@@ -3,9 +3,6 @@ name: Send Slack Alerts
 on:
   schedule:
     - cron: "* */6 * * *"
-  push:
-    branches:
-      - main
 
 jobs:
   build:
@@ -30,3 +27,16 @@ jobs:
           LOG_CHANNEL_ID: ${{ secrets.LOG_CHANNEL_ID }}
           REPORTING_CHANNEL_ID: ${{ secrets.REPORTING_CHANNEL_ID }}
         run: python main.py
+
+      - name: commit files
+        run: |
+          git config --local user.email "niranjannb7777@gmail.com"
+          git config --local user.name "Niranjan B"
+          git add timestamp.txt
+          git diff-index --quiet HEAD || (git commit -a -m "updated timestamp" --allow-empty)
+
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
