@@ -1,9 +1,13 @@
 from src import utils, slack
-from datetime import datetime, timedelta
+from datetime import datetime
+
 from dotenv import load_dotenv
 
 load_dotenv()
-timestamp_from = int((datetime.now() - timedelta(days=1)).timestamp())
+
+with open('timestamp.txt') as f :
+    timestamp_from = int(f.read().strip())
+
 timestamp_to = int(datetime.now().timestamp())
 
 # CONVERTING TIMESTAMP TO DATE
@@ -13,4 +17,9 @@ try:
 except Exception as e:
     exit(1)
 
-slack.work(timestamp_from, timestamp_to, from_time, to_time)
+incidents  = slack.work(timestamp_from, timestamp_to, from_time, to_time)
+
+if len(incidents) > 0:
+    with open('timestamp.txt', 'w') as f :
+        incident = list(incidents.values())[0]
+        f.write(str(incident[2]))

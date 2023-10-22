@@ -3,6 +3,9 @@ name: Send Slack Alerts
 on:
   schedule:
     - cron: "* */6 * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   build:
