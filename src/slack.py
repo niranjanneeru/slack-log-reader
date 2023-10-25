@@ -23,7 +23,8 @@ def work(timestamp_from, timestamp_to, from_time, to_time):
         for message in messages[::-1]:
             if "text" in message:
                 action, link, link_id, process = utils.parse_text(message["text"])
-                details = message["attachments"][0]["text"] if "attachments" in message else None
+                details = message["attachments"][0] if "attachments" in message else None
+                details = details["text"] if "text" in message else None
                 timestamp = int(float(message['ts']))
                 if action == "Incident":
                     if process == "running":
