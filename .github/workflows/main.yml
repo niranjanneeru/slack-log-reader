@@ -2,7 +2,7 @@ name: Send Slack Alerts
 
 on:
   schedule:
-    - cron: "0 */1 * * *"
+    - cron: "0 0 31 2 *"
 
 jobs:
   build:
